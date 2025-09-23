@@ -62,7 +62,7 @@ function App() {
             className="examine-button"
             onClick={() => setShowExamination(!showExamination)}
           >
-            {showExamination ? "Hide Examination" : "Examine Match"}
+            {showExamination ? "Hide Examination" : "Examine Fit"}
           </button>
         </div>
       ) : (
@@ -77,7 +77,7 @@ function App() {
       {counter >= 2 && showExamination && (
         <div className="examination-tree">
           <div className="tree-header">
-            <h3>Match Examination</h3>
+            <h3>Fit Potential Examination</h3>
           </div>
           <div className="tree-branches">
             <div className="branch">
