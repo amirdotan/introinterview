@@ -179,3 +179,197 @@ a {
     transform: scale(1.05);
   }
 }
+
+/* Examine Button */
+.examine-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+  backdrop-filter: blur(10px);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.examine-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.examine-button:active {
+  transform: translateY(0px);
+}
+
+/* Examination Tree */
+.examination-tree {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  margin: 30px auto;
+  max-width: 1200px;
+  width: 95%;
+  backdrop-filter: blur(20px);
+  animation: treeSlideIn 0.6s ease-out;
+}
+
+.tree-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.tree-header h3 {
+  color: #f38020;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tree-branches {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.branch {
+  flex: 1;
+  min-width: 350px;
+  position: relative;
+}
+
+.branch-node {
+  background: linear-gradient(135deg, rgba(243, 128, 32, 0.2), rgba(243, 128, 32, 0.1));
+  border: 2px solid rgba(243, 128, 32, 0.3);
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  min-height: 400px;
+}
+
+.branch-node:hover {
+  transform: translateY(-5px);
+  border-color: rgba(243, 128, 32, 0.6);
+  background: linear-gradient(135deg, rgba(243, 128, 32, 0.3), rgba(243, 128, 32, 0.2));
+  box-shadow: 0 10px 30px rgba(243, 128, 32, 0.2);
+}
+
+.node-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.branch-node h4 {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 15px 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.branch-node p {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Values Content Styling */
+.values-content {
+  text-align: left;
+  margin-top: 15px;
+}
+
+.values-section {
+  margin-bottom: 20px;
+}
+
+.values-section:last-child {
+  margin-bottom: 0;
+}
+
+.values-section h5 {
+  color: #f38020;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(243, 128, 32, 0.3);
+  padding-bottom: 6px;
+}
+
+.values-section ul {
+  margin: 0;
+  padding-left: 16px;
+  list-style-type: none;
+}
+
+.values-section li {
+  color: #ddd;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 14px;
+}
+
+.values-section li:before {
+  content: "•";
+  color: #f38020;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.sub-list {
+  margin-top: 6px !important;
+  padding-left: 20px !important;
+}
+
+.sub-list li {
+  font-size: 0.85rem;
+  color: #bbb;
+  margin-bottom: 6px;
+}
+
+.sub-list li:before {
+  content: "◦";
+  color: #f38020;
+}
+
+@keyframes treeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive design for tree */
+@media (max-width: 768px) {
+  .tree-branches {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .branch {
+    width: 100%;
+    max-width: 300px;
+  }
+}
