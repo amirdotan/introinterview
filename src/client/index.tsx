@@ -1,32 +1,17 @@
 import "./styles.css";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
-import createGlobe from "cobe";
 import usePartySocket from "partysocket/react";
 
 // The type of messages we'll be receiving from the server
 import type { OutgoingMessage } from "../shared";
-import type { LegacyRef } from "react";
 
 function App() {
-  // A reference to the canvas element where we'll render the globe
-  const canvasRef = useRef<HTMLCanvasElement>();
-  // The number of markers we're currently displaying
+  // The number of connections we're currently displaying
   const [counter, setCounter] = useState(0);
-  // A map of marker IDs to their positions
-  // Note that we use a ref because the globe's `onRender` callback
-  // is called on every animation frame, and we don't want to re-render
-  // the component on every frame.
-  const positions = useRef<
-    Map<
-      string,
-      {
-        location: [number, number];
-        size: number;
-      }
-    >
-  >(new Map());
+  // A map of connection IDs for tracking
+  const connections = useRef<Set<string>>(new Set());
   // Connect to the PartyServer server
   const socket = usePartySocket({
     room: "default",
@@ -34,76 +19,51 @@ function App() {
     onMessage(evt) {
       const message = JSON.parse(evt.data as string) as OutgoingMessage;
       if (message.type === "add-marker") {
-        // Add the marker to our map
-        positions.current.set(message.position.id, {
-          location: [message.position.lat, message.position.lng],
-          size: message.position.id === socket.id ? 0.1 : 0.05,
-        });
+        // Add the connection to our set
+        connections.current.add(message.position.id);
         // Update the counter
-        setCounter((c) => c + 1);
+        setCounter(connections.current.size);
       } else {
-        // Remove the marker from our map
-        positions.current.delete(message.id);
+        // Remove the connection from our set
+        connections.current.delete(message.id);
         // Update the counter
-        setCounter((c) => c - 1);
+        setCounter(connections.current.size);
       }
     },
   });
 
-  useEffect(() => {
-    // The angle of rotation of the globe
-    // We'll update this on every frame to make the globe spin
-    let phi = 0;
-
-    const globe = createGlobe(canvasRef.current as HTMLCanvasElement, {
-      devicePixelRatio: 2,
-      width: 400 * 2,
-      height: 400 * 2,
-      phi: 0,
-      theta: 0,
-      dark: 1,
-      diffuse: 0.8,
-      mapSamples: 16000,
-      mapBrightness: 6,
-      baseColor: [0.3, 0.3, 0.3],
-      markerColor: [0.8, 0.1, 0.1],
-      glowColor: [0.2, 0.2, 0.2],
-      markers: [],
-      opacity: 0.7,
-      onRender: (state) => {
-        // Called on every animation frame.
-        // `state` will be an empty object, return updated params.
-
-        // Get the current positions from our map
-        state.markers = [...positions.current.values()];
-
-        // Rotate the globe
-        state.phi = phi;
-        phi += 0.01;
-      },
-    });
-
-    return () => {
-      globe.destroy();
-    };
-  }, []);
 
   return (
     <div className="App">
       <h1>Where's everyone at?</h1>
-      {counter !== 0 ? (
+      {counter === 1 ? (
         <p>
-          <b>{counter}</b> {counter === 1 ? "person" : "people"} connected.
+          <b>1</b> person connected. Waiting for all participants to join...
+        </p>
+      ) : counter > 1 ? (
+        <p>
+          <b>{counter}</b> people connected. Everyone is here! 🎉
         </p>
       ) : (
         <p>&nbsp;</p>
       )}
 
-      {/* The canvas where we'll render the globe */}
-      <canvas
-        ref={canvasRef as LegacyRef<HTMLCanvasElement>}
-        style={{ width: 400, height: 400, maxWidth: "100%", aspectRatio: 1 }}
-      />
+      {counter >= 2 ? (
+        <div className="special-message">
+          <div className="animated-cloud">☁️</div>
+          <p className="special-text">
+            <span className="highlight">Cloudflare</span> × <span className="highlight">Amir Dotan</span>
+            <br />
+            <span className="subtitle">Solution Engineering interview process begins</span>
+          </p>
+        </div>
+      ) : (
+        /* Simple cloud when less than 2 people */
+        <div className="cloud-container">
+          <div className="simple-cloud">☁️</div>
+          <div className="connection-count">{counter} {counter === 1 ? "connection" : "connections"}</div>
+        </div>
+      )}
 
       {/* Let's give some credit */}
       <p>
