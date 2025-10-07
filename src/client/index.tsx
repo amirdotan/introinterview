@@ -85,7 +85,7 @@ function App() {
                 <h4>Alignment to Mission and Values</h4>
                 <div className="values-content">
                   <div className="values-section">
-                    <h5>Cloudflare's Mission andValues</h5>
+                    <h5>Cloudflare's Mission and Values</h5>
                     <ul>
                       <li>Building a better internet</li>
                       <li>The Internet as an enabler of society</li>
