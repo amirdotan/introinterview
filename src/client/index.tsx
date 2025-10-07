@@ -44,7 +44,7 @@ function App() {
         </p>
       ) : counter > 1 ? (
         <p>
-          <b>{counter}</b> people connected. Everyone is here! 🎉
+          <b>{counter}</b> people connected. Everyone is here! Welcome Ozgur 🎉
         </p>
       ) : (
         <p>&nbsp;</p>
@@ -54,7 +54,7 @@ function App() {
         <div className="special-message">
           <div className="animated-cloud">☁️</div>
           <p className="special-text">
-            <span className="highlight">Cloudflare</span> × <span className="highlight">Amir Dotan</span>
+            <span className="highlight">Ozgur</span> × <span className="highlight">Amir Dotan</span>
             <br />
             <span className="subtitle">Solution Engineering interview process begins</span>
           </p>
